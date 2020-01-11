@@ -44,12 +44,17 @@ function registerGETHandlers(router) {
     const flashUploadStatus = ctx.flash('uploadStatus');
     const isUserAuth = db.isUserAuth();
 
+    const skills = db.getSkills();
+
+    console.log('skills', skills);
+
     if (!isUserAuth) {
       ctx.flash('loginStatus', 'Пожалуйста, авторизируйтесь!');
       return ctx.redirect('/login');
     }
 
-    ctx.render('admin', {
+    ctx.render('admin', { 
+      skills,
       msgauth: flashLoginStatus.length ? flashLoginStatus : null,
       msgskill: flashSkillsStatus.length ? flashSkillsStatus : null,
       msgfile: flashUploadStatus.length ? flashUploadStatus : null
